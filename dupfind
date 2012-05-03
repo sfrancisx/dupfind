@@ -1,0 +1,4 @@
+#!/bin/sh
+
+java -Xmx512m -jar /home/y/bin/dupfind.jar "$@"
+

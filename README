@@ -1,0 +1,100 @@
+Version 1.0.1
+
+dupfind: Scan JavaScript code and find duplicated sections.
+
+Synopsis
+--------
+dupfind [file_set ...] [file_pattern ...]
+
+Description
+-----------
+dupfind will read multiple JS files and look for duplicated segments of code.
+It matches tokens, so it will ignore comments and it's insensitive to
+whitespace.  It can do a fuzzy match, which will also ignore changes to
+variable names.  You can define filesets in a configuration file, for often
+used files.
+
+When run with no arguments, default filesets from the configuration file will
+be scanned.  When run with arguments, the arguments are either the names of
+filesets in the configuration file, or file patterns to match.
+
+Configuration
+-------------
+You can create a configuration file for dupfind to use.  dupfind will search
+for the configuration file in these locations, in this order:
+
+   ./dupfind.cfg
+   ~/.dupfind.cfg
+   /home/y/conf/dupfind/dupfind.cfg
+
+If it doesn't find a configuration file, it will search all .js files in or
+below the current directory.
+
+The configuration file should contain JSON that looks like this:
+
+{
+    min:        30,
+    max:        500,
+    increment:  10,
+    fuzzy:      true,
+
+    sources:
+    [
+        {
+            name:   "yui",
+            def:    true,
+            root:   "/home/y/share/htdocs/yui3",
+            directories:
+            [
+                "build"
+            ],
+            include:
+            [
+                "*.js"
+            ],
+            exclude:
+            [
+                "*/.svn",
+                "*simpleyui.js",
+                "*-[^/]*.js",
+                "*yui.js",
+                "*datatype*"
+            ]
+        }
+    ]
+}
+
+min:         The minimum number of consecutive duplicated tokens required to
+             report the duplication.
+max:         The maximim number of consecutive tokens to check
+increment:   dupfind looks for duplication multiple times.  The first time, it
+             looks for 'max' consecutive tokens.  It reduces the number by
+             'increment' and checks again (I guess 'increment' should really be
+             'decrement'...)  It continues until the number being checked is
+             less than 'min'.
+fuzzy:       'true' to do a fuzzy match.  A fuzzy match ignores changes to
+             variable names.
+sources:     An array of objects describing the files to scan.
+
+Each object in the sources array contains:
+
+name:        The name of the file set.  This name can be provided as an
+             argument on the command line to limit scanning to this fileset.
+def:         'true' if this is a default fileset.  All default filesets will be
+             scanned when dupfind is executed with no arguments.
+root:        The root directory for the fileset.
+directories: An array of strings.  These are subdirectories under the root to
+             scan.  If this member isn't present, all subdirectories are
+             scanned.
+include:     Files to include.  This is a DOS style regular expression - '.'
+             means '.', '*' means '.*' and '?' means '.'.  The expression is
+             matched against the full path to each regular file (not
+             directories), and it has to match for the file to be scanned.
+exclude:     Files and directories to exclude.  This is also a DOS style
+             regular expression.  Matching files are excluded.  Matching
+             directories aren't scanned at all (meaning they're not recursed
+             into, either.)
+
+-Steve Francis
+sfrancisx@yahoo.com
+
