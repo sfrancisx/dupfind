@@ -34,63 +34,63 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 public class Token
 {
-	public int		type;			// token type
-	public String	src;			// the token's string in the souce
+    public int		type;			// token type
+    public String	src;			// the token's string in the souce
 
-	public String	value;			// The token's value (for STRING & REGEXP tokens)
-	public int		intValue;		// The token's integer value (for NUMBER tokens)
-	
-	public int		start;			// Index of 1st character in the source
-	public int		end;			// Index of 1st character after the token in the source
-	public int		length;			// end - start
+    public String	value;			// The token's value (for STRING & REGEXP tokens)
+    public int		intValue;		// The token's integer value (for NUMBER tokens)
+    
+    public int		start;			// Index of 1st character in the source
+    public int		end;			// Index of 1st character after the token in the source
+    public int		length;			// end - start
 
-	public int		lineNum;		// Line number of the token
-	public int		charOnLine;		// Column number of token start
-	public int		lineStart;		// Index of the start of the line containing the token
+    public int		lineNum;		// Line number of the token
+    public int		charOnLine;		// Column number of token start
+    public int		lineStart;		// Index of the start of the line containing the token
 
-	Token(int type, String string, int offset, int lineNum, int charOnLine, int lineStart)
-	{
-		this.type	= type;
-		this.src	= string;
-		
-		this.start = offset - 1;
-		this.length = string.length();
-		this.end = this.start + this.length;
-		
-		if (this.type == STRING || this.type == REGEXP)
-		{
-			string = string.substring(1, string.length()-1);
-			if (this.type == STRING)
-			{
-				// TODO: Handle other escaped characters
-				string = string.replace("\\\'", "'");
-				string = string.replace("\\\"", "\"");
-				string = string.replace("\\\\", "\\");
-			}
-			
-			this.value = string;
-		}
-		else
-			this.value = this.src;
+    Token(int type, String string, int offset, int lineNum, int charOnLine, int lineStart)
+    {
+        this.type	= type;
+        this.src	= string;
+        
+        this.start = offset - 1;
+        this.length = string.length();
+        this.end = this.start + this.length;
+        
+        if (this.type == STRING || this.type == REGEXP)
+        {
+            string = string.substring(1, string.length()-1);
+            if (this.type == STRING)
+            {
+                // TODO: Handle other escaped characters
+                string = string.replace("\\\'", "'");
+                string = string.replace("\\\"", "\"");
+                string = string.replace("\\\\", "\\");
+            }
+            
+            this.value = string;
+        }
+        else
+            this.value = this.src;
 
-		this.value = this.value.intern();
-		
-		if (this.type == NUMBER)
-		{
-			try
-			{
-				this.intValue = (new java.lang.Integer(string)).intValue();
-			}
-			catch (Exception e)
-			{
-			}
-		}
-			
-		this.lineNum = lineNum;
-		this.charOnLine = charOnLine;
-		this.lineStart = lineStart;
-	}
-	
+        this.value = this.value.intern();
+        
+        if (this.type == NUMBER)
+        {
+            try
+            {
+                this.intValue = (new java.lang.Integer(string)).intValue();
+            }
+            catch (Exception e)
+            {
+            }
+        }
+            
+        this.lineNum = lineNum;
+        this.charOnLine = charOnLine;
+        this.lineStart = lineStart;
+    }
+    
 //    public static final int
 //            CONTEXTUAL	= 1,
 //            RESERVED	= 2,
@@ -125,16 +125,16 @@ public class Token
 //            case NAME: 
 //            case UNDEFINED:
 //                return new Token(NAME, value_, offset, lineNum, charOnLine, lineStart);
-			
+            
 //            case STRING:
 //                if (reserved == LITERAL)
 //                    return new Token(NAME, value_, offset, lineNum, charOnLine, lineStart);
-			
+            
 //            default:
 //                return null;
 //        }
 //    }
-	
+    
 //    public boolean isCompoundAssignment()
 //    {
 //        if (type == MULASSIGN || type == DIVASSIGN || type == MODASSIGN
@@ -143,10 +143,10 @@ public class Token
 //            || type == XORASSIGN || type == ORASSIGN || type == LOGANDASSIGN
 //            || type == LOGORASSIGN)
 //                return true;
-		
+        
 //        return false;
 //    }
-	
+    
 //    public static String getTokenString(int type)
 //    {
 //        switch (type)
@@ -159,12 +159,12 @@ public class Token
 //                return "&&";
 //            case RP:
 //                return ")";
-				
+                
 //            default:
 //                return "(unimplemented for token " + type + ")";
 //        }
 //    }
-	
+    
     /*
      * 
      */
@@ -176,14 +176,14 @@ public class Token
 
         return new Token(result.intValue(), name, offset, line, charOnLine, lineStart);
     }
-	
+    
     public static final int
         NAME		= 1,
         NUMBER		= 2,
         STRING		= 3,
 
         FIRST_KEYWORD	= 20,
-		
+        
         BREAK		= 20,
         CASE		= 21,
         CONTINUE	= 22, 
@@ -245,9 +245,9 @@ public class Token
 //		STANDARD	= 80,
 //		STRICT		= 81,
         UNDEFINED	= 82,
-		
+        
         LAST_KEYWORD		= 99,
-		
+        
         SEMI		= 107,		// ;
         LB			= 108,		// [
         RB			= 109,		// ]
@@ -297,7 +297,7 @@ public class Token
         SUBASSIGN	= 153,		// -=
         DEC			= 154,		// --
         SUB			= 155,		// -
-		
+        
         // Extensions
         BS			= 156,		// \
         COMMENT		= 157;
@@ -338,7 +338,7 @@ public class Token
             IF, IN, NEW, NULL, RETURN, SWITCH,
             THIS, TRUE, TYPEOF, VAR, VOID, WHILE,
             WITH,
-			
+            
             // JS2
             //CAST, CATCH, CLASS, CONST, DEBUGGER, DYNAMIC,
             //FINAL, FINALLY, INSTANCEOF, INTERFACE, IS, LET,
