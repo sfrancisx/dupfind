@@ -37,6 +37,7 @@ The configuration file should contain JSON that looks like this:
     max:        500,
     increment:  10,
     fuzzy:      true,
+    cpd:        false,
 
     sources:
     [
@@ -74,6 +75,7 @@ increment:   dupfind looks for duplication multiple times.  The first time, it
              less than 'min'.
 fuzzy:       'true' to do a fuzzy match.  A fuzzy match ignores changes to
              variable names.
+cpd:         'true' to output in XML (like PMD/CPD).
 sources:     An array of objects describing the files to scan.
 
 Each object in the sources array contains:
@@ -94,7 +96,3 @@ exclude:     Files and directories to exclude.  This is also a DOS style
              regular expression.  Matching files are excluded.  Matching
              directories aren't scanned at all (meaning they're not recursed
              into, either.)
-
--Steve Francis
-sfrancisx@yahoo.com
-
